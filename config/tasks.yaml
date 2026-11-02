@@ -1,0 +1,31 @@
+retrieval_task:
+  description: >
+    Retrieve the list of open issues from the GitHub repository called web2project/web2project.
+  expected_output: >
+    Create a markdown table with the following columns: html_url and title.
+    The headers should be URL and Title.
+    The table should contain all open issues from the repository.
+  tool: MyCustomTool
+  agent: team_lead
+
+categorization_task:
+  description: >
+    Use the list of issues you got from the retrieval task and use the body of each to categorize 
+    the issue. The categories are: Security, Bug, Feature, Documentation, Authentication, User Interface, Database. 
+    Issues can be in multiple categories.
+  expected_output: >
+    Create a markdown table with the following columns: html_url, title, and categories.
+    The headers should be URL, Title, and Categories.
+    The table should contain all open issues from the repository.
+  agent: team_lead
+
+notification_task:
+  description: >
+    This task lets us post an issue to a specific Slack channel. 
+    Any issues that are categorized as Security should be posted to the #team-security channel with Channel ID C0CE4AUHB37.
+    Any issues that are categorized as User Interface should be posted to the #team-design channel with Channel ID C0CEDAPQFNY.
+    Any issues that are categorized as Authentication should be posted to the #team-authentication channel with Channel ID C0CE3CTV36X.
+  expected_output: >
+    This will post each issue into the Slack channel based on its category and let us know the result.
+  tool: SlackTool
+  agent: project_manager

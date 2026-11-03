@@ -57,7 +57,11 @@ class Ch4GithubSlack():
             config=self.tasks_config['categorization_task'],
             output_file='output/categorized.md'
         )
-    
+    @task
+    def map_slack_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['map_slack_task'],
+        )
     @task
     def notification_task(self) -> Task:
         return Task(

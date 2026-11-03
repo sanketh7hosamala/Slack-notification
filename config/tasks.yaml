@@ -17,15 +17,25 @@ categorization_task:
     Create a markdown table with the following columns: html_url, title, and categories.
     The headers should be URL, Title, and Categories.
     The table should contain all open issues from the repository.
+  tool: MyCustomTool
   agent: team_lead
 
 notification_task:
   description: >
     This task lets us post an issue to a specific Slack channel. 
-    Any issues that are categorized as Security should be posted to the #team-security channel with Channel ID C0CE4AUHB37.
-    Any issues that are categorized as User Interface should be posted to the #team-design channel with Channel ID C0CEDAPQFNY.
-    Any issues that are categorized as Authentication should be posted to the #team-authentication channel with Channel ID C0CE3CTV36X.
   expected_output: >
     This will post each issue into the Slack channel based on its category and let us know the result.
+    when there are multiple issues with the same category, please post them in all relevant channels.
+    do not notify issues that do not find cooreponding channels
+  tool: SlackTool  
+  agent: project_manager
+
+map_slack_task:
+  description: >
+    This task gets a list of the public slack channels and maps them to their IDs.
+  expected_output: >
+    Get a list of public Slack channels that use the team prefix and map each of the 
+    categories to the proper team and return the channel ID
+    please infer the channel name when possible and do not wait for used input
   tool: SlackTool
   agent: project_manager

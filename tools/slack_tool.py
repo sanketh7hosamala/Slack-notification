@@ -44,3 +44,26 @@ class SlackTool(BaseTool):
             raise RuntimeError(f"Slack rejected the message: {error}")
 
         return f"Message posted successfully to Slack channel {slack_channel}."
+
+    def get_slack_channels(self) -> str:
+        token = os.environ.get("SLACK_BOT_TOKEN")
+        if not token:
+            raise ValueError("SLACK_BOT_TOKEN environment variable is not set.")
+
+        response = requests.get(
+            "https://slack.com/api/conversations.list?types=public_channel",
+            headers={
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": f"Bearer {token}",
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        result = response.json()
+        if not result.get("ok"):
+            error = result.get("error", "unknown_error")
+            raise RuntimeError(f"Slack API error: {error}")
+
+        return result
+        #channels = result.get("channels", [])
+        #return [{"id": channel["id"], "name": channel["name"]} for channel in channels]

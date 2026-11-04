@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
+import asyncio
 from datetime import datetime
 
 from ch4_github_slack.crew import Ch4GithubSlack
@@ -13,6 +13,25 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
+###
+### asynchronous user input
+#
+#async def run_async():
+#    repo = await asyncio.to_thread(input, "GitHub repository (owner/repo): ")
+#
+#    inputs = {"repo": repo}
+#
+#    try:
+#        result = await Ch4GithubSlack().crew().kickoff_async(inputs=inputs)
+#        print(result)
+#    except Exception as e:
+#        raise Exception(f"An error occurred while running the crew: {e}") from e
+#
+#
+#def run():
+#    asyncio.run(run_async())
+
+###
 def run():
     """
     Run the crew.
